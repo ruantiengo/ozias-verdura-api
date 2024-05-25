@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      PORT: 27017
+    ports:
+      - '27017:27017'
+  api-verdura:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: api-verdura
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      NODE_ENV: development
+      PORT: 8080
+      HOST: 'localhost'
+      CORS_ORIGIN: 'http://localhost:*'
+      COMMON_RATE_LIMIT_WINDOW_MS: 100
+      COMMON_RATE_LIMIT_MAX_REQUESTS: 20
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongodb

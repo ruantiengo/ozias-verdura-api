@@ -1,0 +1,7 @@
+node_modules
+Dockerfile
+LICENSE
+.env.template
+.gitignore
+.git
+dist
